@@ -12,6 +12,11 @@ List<Teacher> teachers = [
     new() {Name = "Lena"},
 ];
 
+List<Book> books = [
+    new () {Title = "1984"},
+    new () {Title = "Crime & Punishment"},
+];
+
 app.MapGet("/", GetMe);
 app.MapGet("/orb", GetAlso);
 app.MapGet("/micke", GetMicke);
@@ -19,7 +24,27 @@ app.MapPost("/hello", SayHello);
 app.MapGet("/teachers", GetTeachers);
 app.MapGet("/teacher/{n}", GetTeacher);
 
+app.MapGet("/books", GetBooks);
+app.MapGet("/book/{t}", GetBook);
+
 app.Run();
+
+List<Book> GetBooks()
+{
+    return books;
+}
+
+IResult GetBook(int t)
+{
+    if (t >= 0 && t < books.Count)
+    {
+        return Results.Ok(books[t]);
+    }
+    else
+    {
+        return Results.NotFound();
+    }
+}
 
 
 List<Teacher> GetTeachers()
